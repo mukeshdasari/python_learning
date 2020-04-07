@@ -72,7 +72,8 @@ if __name__ == '__main__':
                         print('Selected choice is already marked. Please enter valice choice.')
                         continue
                 else:
-                    print('Please Intefer choice within range 1-9')
+                    print('Please Inter choice within range 1-9')
+                    continue
             else:
                 print("Please enter Integer choice.")
                 continue
