@@ -1,3 +1,4 @@
+import sys
 def init_board():
     board = [x+1 for x in range(9)]
     return board
@@ -21,13 +22,15 @@ def display_board(board):
     print('\n')
     return
 
-def win_check(board):
+def win_check(board, player):
     win_condition = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2, 4, 6]]
     for condition in win_condition:
         if (board[condition[0]] == board[condition[1]] == board[condition[2]] == 'X'):
-            return 'player1'
+            print('{} won the match'.format(player))
+            return True
         elif (board[condition[0]] == board[condition[1]] ==  board[condition[2]] == '0'):
-            return 'player2'
+            print('{} won the match'.format(player))
+            return True
     return False
  
 def mark_board(board, choice, mark):
@@ -35,37 +38,47 @@ def mark_board(board, choice, mark):
     return board
 
 if __name__ == '__main__':
-    board = init_board()
-    win_result = win_check(board)
-    player1 = input('Enter Player 1 Name : ')
-    print("Hi {}! You will play with sign 'X'.".format(player1.upper()))
-    player2 = input('Enter Player 2 Name : ')
-    print("Hi {}! You will play with sign 'O'.".format(player2.upper()))
-    attempt = 0
-    display_board(board)
+    try:
+        board = init_board()
 
-    while (win_result == False):
-        player1_choice = input('Attempt {} : {} enter index of your play choice (X) : '.format(attempt+1, player1.upper()))
-        board = mark_board(board, player1_choice, 'X')
-        attempt += 1
+        player1 = input('Enter Player 1 Name : ')
+        print("Hi {}! You will play with sign 'X'.".format(player1.upper()))
+        player2 = input('Enter Player 2 Name : ')
+        print("Hi {}! You will play with sign 'O'.".format(player2.upper()))
+        win_result = False
+        player_list = (player1.upper(), player2.upper())
+        attempt = 0
         display_board(board)
-        win_result = win_check(board)
-        if (win_result != False or attempt == 9):
-            break
-        player1_choice = input('Attempt {} : {} enter index of your play choice (0) : '.format(attempt+1, player2.upper()))
-        board = mark_board(board, player1_choice, '0')
-        attempt += 1
-        display_board(board)
-        win_result = win_check(board)
-        if (win_result != False):
-            break
 
+        while(win_result != True and attempt!=9):
+            player = ''
+            mark = ''
+            if(attempt%2==0):
+                player = player_list[0]
+                mark = 'X'
+            else:
+                player = player_list[1]
+                mark = '0'
+            player_choice = input('Attempt {} : {} enter index of your play choice [{}] : '.format(attempt+1, player, mark))
+            if(player_choice.isnumeric()):
+                if(int(player_choice) >=1 and int(player_choice) <=9):
+                    if((board[int(player_choice)-1] != 'X') and (board[int(player_choice)-1]!= '0')):
+                        board[int(player_choice)-1] = mark            
+                        display_board(board)
+                        win_result = win_check(board, player)
+                        attempt += 1
+                        continue
+                    else:
+                        print('Selected choice is already marked. Please enter valice choice.')
+                        continue
+                else:
+                    print('Please Intefer choice within range 1-9')
+            else:
+                print("Please enter Integer choice.")
+                continue
+        if(win_result==False):
+            print('Match Draw!')
 
-    if(win_result == 'player1'):
-        print("{} won the match.".format(player1.upper()))
-    elif(win_result == 'player2'):
-        print("{} won the match.".format(player2.upper()))
-    else:
-        print("Match draw.")
-
-
+    except KeyboardInterrupt:
+        print("\nBye Bye!")
+        sys.exit()
