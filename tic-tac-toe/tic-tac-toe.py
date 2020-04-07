@@ -69,7 +69,7 @@ if __name__ == '__main__':
                         attempt += 1
                         continue
                     else:
-                        print('Selected choice is already marked. Please enter valice choice.')
+                        print('Selected choice is already marked. Please enter valid choice.')
                         continue
                 else:
                     print('Please enter choice within range 1-9')
