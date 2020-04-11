@@ -3,7 +3,7 @@ if __name__ == '__main__':
     M = N
     lst = list()
     command = list()
-    while(N!=0):
+    while(N != 0):
         command.append(raw_input())
         N = N-1
 
@@ -14,7 +14,7 @@ if __name__ == '__main__':
             lst.insert(int(num[1]), int(num[2]))
         elif 'print' in step:
             print(lst)
-        elif 'remove' in step:  
+        elif 'remove' in step:
             lst.remove(int(num[1]))
         elif 'append' in step:
             lst.append(int(num[1]))
@@ -24,5 +24,4 @@ if __name__ == '__main__':
             lst.pop()
         elif 'reverse' in step:
             lst.reverse()
-        M =  M-1
-        
+        M = M-1
